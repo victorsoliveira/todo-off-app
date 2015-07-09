@@ -1,0 +1,29 @@
+{
+  "name": "offline-app",
+  "version": "1.0.0",
+  "authors": [
+    "Victor Oliveira <victormacae@gmail.com>"
+  ],
+  "main": "public/index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "offline": "~0.7.11",
+    "angular": "~1.4.2",
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5",
+    "angular-resource": "~1.4.2",
+    "lodash": "~3.10.0",
+    "node-uuid": "~1.4.3"
+  },
+  "devDependencies": {
+    "offlinejs-simulate-ui": "~0.1.2"
+  }
+}

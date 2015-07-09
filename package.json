@@ -1,0 +1,21 @@
+{
+  "name": "offline-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "preinstall": "npm update",
+    "postinstall": "bower install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Victor Oliveira <victormacae@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "express": "^4.13.1",
+    "mongoose": "^4.0.6",
+    "morgan": "^1.6.1",
+    "node-uuid": "^1.4.3",
+    "path": "^0.11.14"
+  }
+}

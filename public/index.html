@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link href="components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+    <link href="components/offline/themes/offline-language-english-indicator.css" rel="stylesheet">
+    <link href="components/offline/themes/offline-theme-chrome-indicator.css" rel="stylesheet">
+
+    <link href="css/app.css" rel="stylesheet">
+
+</head>
+<body ng-app="todoApp">
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <section id="todo" class="col-lg-6 col-lg-offset-3" ng-controller="todoCtrl">
+
+                <div id="todoForm" class="row form-group form-inline">
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" ng-model="todo.text" placeholder="What u need todo?">
+                        <button type="button" class="btn btn-primary" ng-click="add()">Add</button>
+                    </div>
+                </div>
+
+                <div id="todoList" class="row" ng-cloak>
+                    <div class="col-lg-12">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="todo in todos">{{ todo.text }}</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+
+
+    <script src="components/jquery/dist/jquery.js"></script>
+    <script src="components/angular/angular.js"></script>
+    <script src="components/bootstrap/dist/js/bootstrap.js"></script>
+
+    <script src="components/angular-resource/angular-resource.js"></script>
+
+    <script src="components/offline/offline.min.js"></script>
+    <script src="components/offlinejs-simulate-ui/offline-simulate-ui.min.js"></script>
+
+    <script src="components/lodash/lodash.js"></script>
+    <script src="components/node-uuid/uuid.js"></script>
+
+    <script src="app.js"></script>
+
+    <script src="controllers/todoCtrl.js"></script>
+
+    <script src="services/persistenceStrategies.js"></script>
+    <script src="services/persistenceService.js"></script>
+    <script src="services/localDBService.js"></script>
+    <script src="services/syncService.js"></script>
+
+</body>
+</html>
