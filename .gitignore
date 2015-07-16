@@ -1,4 +1,3 @@
-.[iI]dea
-node_modules
-public/components
-
+/.[iI]dea
+/node_modules
+/public/components

@@ -11,19 +11,16 @@
     function localDBService($q, indexedDB, uuid) {
 
         var _error = {
-
             setErrorHandlers: function(request, errorHandler) {
-
                 if(request !== undefined){
                     if ('onerror' in request) request.onerror = errorHandler;
                     if ('onblocked' in request) request.onerror = errorHandler;
                     if ('onabort' in request) request.onerror = errorHandler;
                 }
-
             }
         };
 
-        var _db = {
+        var db = {
 
             instance: null,
 
@@ -42,8 +39,8 @@
                 request.onupgradeneeded = databaseModel.upgrade;
 
                 request.onsuccess = function(e) {
-                    _db.instance = e.target.result;
-                    _error.setErrorHandlers(_db.instance, deferred.reject);
+                    db.instance = e.target.result;
+                    _error.setErrorHandlers(db.instance, deferred.reject);
                     deferred.resolve();
                 };
 
@@ -52,15 +49,15 @@
             },
 
             requireOpenDB: function(objectStoreName, deferred) {
-                if(_db.instance === null){
+                if(db.instance === null){
                     deferred.reject('You cannot use an object store when database is not opened. ObjectStoreName = ' + objectStoreName)
                 }
             },
 
             getObjectStore: function(objectStoreName, mode) {
 
-                var mode = mode || _db.transactionTypes.readonly;
-                var txn = _db.instance.transaction(objectStoreName, mode);
+                var mode = mode || db.transactionTypes.readonly;
+                var txn = db.instance.transaction(objectStoreName, mode);
                 var store = txn.objectStore(objectStoreName);
 
                 return store;
@@ -77,10 +74,10 @@
 
                 var deferred = $q.defer();
 
-                _db.requireObjectStoreName(objectStoreName, deferred);
-                _db.requireOpenDB(objectStoreName, deferred);
+                db.requireObjectStoreName(objectStoreName, deferred);
+                db.requireOpenDB(objectStoreName, deferred);
 
-                var store = _db.getObjectStore(objectStoreName);
+                var store = db.getObjectStore(objectStoreName);
                 var request = store.count();
                 var count;
 
@@ -96,10 +93,10 @@
 
                 var deferred = $q.defer();
 
-                _db.requireObjectStoreName(objectStoreName, deferred);
-                _db.requireOpenDB(objectStoreName, deferred);
+                db.requireObjectStoreName(objectStoreName, deferred);
+                db.requireOpenDB(objectStoreName, deferred);
 
-                var store = _db.getObjectStore(objectStoreName);
+                var store = db.getObjectStore(objectStoreName);
                 var cursor = store.openCursor();
                 var data = [];
 
@@ -124,10 +121,10 @@
 
                 var deferred = $q.defer();
 
-                _db.requireObjectStoreName(objectStoreName, deferred);
-                _db.requireOpenDB(objectStoreName, deferred);
+                db.requireObjectStoreName(objectStoreName, deferred);
+                db.requireOpenDB(objectStoreName, deferred);
 
-                var store = _db.getObjectStore(objectStoreName, _db.transactionTypes.readwrite);
+                var store = db.getObjectStore(objectStoreName, db.transactionTypes.readwrite);
                 var request;
 
                 var date = new Date();
@@ -153,10 +150,10 @@
 
                 var deferred = $q.defer();
 
-                _db.requireObjectStoreName(objectStoreName, deferred);
-                _db.requireOpenDB(objectStoreName, deferred);
+                db.requireObjectStoreName(objectStoreName, deferred);
+                db.requireOpenDB(objectStoreName, deferred);
 
-                var store = _db.getObjectStore(objectStoreName, _db.transactionTypes.readwrite);
+                var store = db.getObjectStore(objectStoreName, db.transactionTypes.readwrite);
                 var getRequest = store.get(key),
                     updateRequest;
 
@@ -186,10 +183,10 @@
 
                 var deferred = $q.defer();
 
-                _db.requireObjectStoreName(objectStoreName, deferred);
-                _db.requireOpenDB(objectStoreName, deferred);
+                db.requireObjectStoreName(objectStoreName, deferred);
+                db.requireOpenDB(objectStoreName, deferred);
 
-                var store = _db.getObjectStore(objectStoreName);
+                var store = db.getObjectStore(objectStoreName);
                 var request = store.get(key);
 
                 request.onsuccess = deferred.resolve;
@@ -198,18 +195,14 @@
 
             },
 
-            'delete': function(objectStoreName, ){
-                //Nothing to do yet
-            },
-
             clear: function(objectStoreName) {
 
                 var deferred = $q.defer();
 
-                _db.requireObjectStoreName(objectStoreName, deferred);
-                _db.requireOpenDB(objectStoreName, deferred);
+                db.requireObjectStoreName(objectStoreName, deferred);
+                db.requireOpenDB(objectStoreName, deferred);
 
-                var store = _db.getObjectStore(objectStoreName, _db.transactionTypes.readwrite);
+                var store = db.getObjectStore(objectStoreName, db.transactionTypes.readwrite);
                 var request = store.clear();
 
                 request.onsuccess = deferred.resolve;
@@ -220,14 +213,13 @@
         };
 
         return {
-            open: _db.open,
-            getAll: _db.getAll,
-            insert: _db.insert,
-            update: _db.update,
-            getById: _db.getById,
-            getCount: _db.getCount,
-            'delete': _db.delete,
-            clear: _db.clear
+            open: db.open,
+            getAll: db.getAll,
+            insert: db.insert,
+            update: db.update,
+            getById: db.getById,
+            getCount: db.getCount,
+            clear: db.clear
         };
 
     }
