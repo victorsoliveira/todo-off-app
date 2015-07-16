@@ -2,7 +2,7 @@
  * Created by victor on 08/07/15.
  */
 
-(function(app, undefined) {
+(function (app, undefined) {
 
     'use strict';
 
@@ -198,6 +198,10 @@
 
             },
 
+            'delete': function(objectStoreName, ){
+                //Nothing to do yet
+            },
+
             clear: function(objectStoreName) {
 
                 var deferred = $q.defer();
@@ -222,6 +226,7 @@
             update: _db.update,
             getById: _db.getById,
             getCount: _db.getCount,
+            'delete': _db.delete,
             clear: _db.clear
         };
 

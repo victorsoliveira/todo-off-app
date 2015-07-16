@@ -6,23 +6,28 @@
     'use strict';
 
     app.service('persistenceService',
-        ['$q', 'Offline', 'remotePersistenceStrategy', 'localPersistenceStrategy', persistenceService]);
+        ['$q', 'Offline', 'remotePersistenceStrategy', 'localPersistenceStrategy', 'syncService', persistenceService]);
 
-    function persistenceService($q, Offline, remotePersistenceStrategy, localPersistenceStrategy){
+    function persistenceService($q, Offline, remotePersistenceStrategy, localPersistenceStrategy, syncService){
 
         var self = this;
 
         self.persistenceType = 'remote';
         self.action = remotePersistenceStrategy;
 
+
+        Offline.on('confirmed-up', function() {
+
+            self.persistenceType = 'remote';
+            self.action = remotePersistenceStrategy;
+
+            //sync local data with server
+            syncService.execute();
+        });
+
         Offline.on('confirmed-down', function(){
             self.persistenceType = 'local';
             self.action = localPersistenceStrategy;
-        });
-
-        Offline.on('confirmed-up', function() {
-            self.persistenceType = 'remote';
-            self.action = remotePersistenceStrategy;
         });
 
         self.getLocalTodo = function(id) {
@@ -66,7 +71,7 @@
 
             return deferred.promise;
 
-        }
+        };
 
         return self;
     }
